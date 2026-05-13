@@ -1007,6 +1007,7 @@ let selectedYear = 2020;
 let selectedMonth = 1;
 let selectedDay = 1;
 let secondLevelImagesPreloaded = false;
+let secondLevelPreviewTimeout = null;
 
 function checkLevel1() {
     const errorHint = document.getElementById('error-1');
@@ -1093,18 +1094,30 @@ function clickPoint(el) {
         const previewImg = document.getElementById('preview-img');
         
         if (preview && previewImg) {
-            previewImg.src = imgPath;
-            preview.style.display = 'block';
-            
-            // 重置并触发动画
             preview.style.animation = 'none';
-            preview.offsetHeight; // 强制重绘
-            preview.style.animation = 'photoFade 2s forwards';
-            
-            // 2秒后自动隐藏
-            setTimeout(() => {
+            preview.style.display = 'none';
+            if (secondLevelPreviewTimeout) {
+                clearTimeout(secondLevelPreviewTimeout);
+                secondLevelPreviewTimeout = null;
+            }
+
+            const imageLoader = new Image();
+            imageLoader.src = imgPath;
+            imageLoader.onload = () => {
+                previewImg.src = imgPath;
+                previewImg.alt = cityName;
+                preview.style.display = 'block';
+                preview.offsetHeight; // 强制重绘
+                preview.style.animation = 'photoFade 2s forwards';
+
+                secondLevelPreviewTimeout = setTimeout(() => {
+                    preview.style.display = 'none';
+                    secondLevelPreviewTimeout = null;
+                }, 2000);
+            };
+            imageLoader.onerror = () => {
                 preview.style.display = 'none';
-            }, 2000);
+            };
         }
 
         updateLine(); // 更新地图连线
