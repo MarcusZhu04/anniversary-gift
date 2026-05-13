@@ -80,20 +80,57 @@
     display: flex !important; /* 激活时强制显示 */
 }
 
-        /* 报错时的摇头动画 */
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
-        }
-
-        /* 成功动画：烟火效果 */
-        @keyframes celebrate {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
-        }
+/* 移动端优化 */
+@media (max-width: 768px) {
+    #level-1 .glass-card {
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 30px 20px;
+    }
+    
+    #level-1 .time-wheel {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    #level-1 .clock-display {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto;
+    }
+    
+    #level-1 .dial-panel {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    #level-1 .dial-card {
+        width: 100px;
+    }
+    
+    #level-1 .btn-start {
+        position: sticky;
+        bottom: -10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+    }
+    
+    #level-1 h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    #level-1 p {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+}
 
         .confetti {
             position: fixed;
@@ -900,7 +937,7 @@
         </audio>
     </div>
     <div style="color: white; font-size: 0.8rem; margin-top: 15px; opacity: 0.8; display: flex; align-items: center; justify-content: center; gap: 8px;">
-        <span>🎵 Now Playing: Taylor Swift - Lover</span>
+        <span>🎵 Now Playing: Beautiful in White</span>
         <span class="music-indicator"></span>
         <span class="music-indicator"></span>
         <span class="music-indicator"></span>
