@@ -989,11 +989,12 @@ function nextLevel(levelNum) {
     // --- 新增：音乐控制逻辑 ---
     const globalMusic = document.getElementById('global-bg-music');
     
-    // 如果是第一关，开始播放全局背景音乐
+    // 如果是第一关，开始播放全局背景音乐，并预加载第二关图片
     if(levelNum === 1) {
         globalMusic.volume = 0.4; // 音量调低一点，作为背景
         globalMusic.play().catch(e => console.log("等待用户交互后播放"));
         updateTimeDisplay();
+        preloadSecondLevelImages();
     }
     
     // 之前的矩阵和题目启动逻辑保持不变
@@ -1005,6 +1006,7 @@ function nextLevel(levelNum) {
 let selectedYear = 2020;
 let selectedMonth = 1;
 let selectedDay = 1;
+let secondLevelImagesPreloaded = false;
 
 function checkLevel1() {
     const errorHint = document.getElementById('error-1');
@@ -1055,6 +1057,23 @@ function updateTimeDisplay() {
 
 updateTimeDisplay();
 
+function preloadSecondLevelImages() {
+    if (secondLevelImagesPreloaded) return;
+    secondLevelImagesPreloaded = true;
+
+    const imagePaths = [
+        'assets/beijing.jpg',
+        'assets/datong.jpg',
+        'assets/tangshan.jpg',
+        'assets/beidaihe.jpg',
+        'assets/qinhuangdao.jpg'
+    ];
+
+    imagePaths.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+}
 // --- 第二关核心逻辑 ---
 const correctOrder = ["北京", "北戴河", "唐山", "大同", "秦皇岛"];
 let userOrder = [];
